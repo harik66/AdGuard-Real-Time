@@ -1,0 +1,7 @@
+-- This should be APPROVED
+INSERT INTO ads_data (headline) VALUES ('Buy Blue Running Shoes');
+
+-- This should be BLOCKED
+INSERT INTO ads_data (headline) VALUES ('WIN FREE CASH PRIZE NOW');
+
+SELECT * FROM ads_data;

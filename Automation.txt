@@ -1,0 +1,15 @@
+CREATE OR REPLACE TRIGGER trg_ad_safety_check
+BEFORE INSERT ON ads_data
+FOR EACH ROW
+DECLARE
+    v_count NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO v_count 
+    FROM blacklist_keywords 
+    WHERE :NEW.headline LIKE '%' || word || '%';
+
+    IF v_count > 0 THEN
+        :NEW.status := 'BLOCKED';
+        :NEW.flag_reason := 'Policy Violation: Blacklisted Content';
+    END IF;
+END;
